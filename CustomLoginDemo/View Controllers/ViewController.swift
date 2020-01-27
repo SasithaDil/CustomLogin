@@ -8,6 +8,10 @@
 
 import UIKit
 import AVKit
+import FirebaseAuth
+import Firebase
+import FirebaseFirestore
+import LocalAuthentication
 
 class ViewController: UIViewController {
     
@@ -21,10 +25,16 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view.
         setUpElements()
+       // checkAuth()
+       
     }
     
+    @IBAction func btnLog(_ sender: Any) {
+        checkAuth()
+    }
     override func viewWillAppear(_ animated: Bool) {
          setUpVideo()
     }
@@ -34,7 +44,28 @@ class ViewController: UIViewController {
         Utilities.styleFilledButton(SignUpButton)
         Utilities.styleHollowButton(LoginButton)
     }
+    override func viewDidAppear(_ animated: Bool) {
+      
+    }
     
+    func checkAuth()  {
+        let context:LAContext = LAContext()
+        let homeViewController =  storyboard?.instantiateViewController(withIdentifier: Constants.StoryBoard.homeViewController) as? HomeViewController
+        
+        
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil){
+            context.evaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Message") { (good, error ) in
+                if good{
+                    self.view.window?.rootViewController = homeViewController
+                    self.view.window?.makeKeyAndVisible()
+                    print("auth success")
+                }
+                else{
+                    print("Try again.")
+                }
+            }
+        }
+    }
     func setUpVideo(){
         
         let bundlePath = Bundle.main.path(forResource: "1023624340-preview", ofType: "mp4")

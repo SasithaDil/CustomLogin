@@ -36,7 +36,7 @@
                                         <rect key="frame" x="0.0" y="58" width="334" height="50"/>
                                         <state key="normal" title="Login"/>
                                         <connections>
-                                            <segue destination="xnj-On-9Vp" kind="show" id="avr-4f-FiW"/>
+                                            <action selector="btnLog:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LUE-ti-kIf"/>
                                         </connections>
                                     </button>
                                 </subviews>
